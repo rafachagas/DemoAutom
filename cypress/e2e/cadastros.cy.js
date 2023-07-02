@@ -35,7 +35,29 @@ describe('Demo automation', function() {
         cy.get(elementsBugerEats.rua).should('have.value', entregador.rua)
         cy.get(elementsBugerEats.bairro).should('have.value', entregador.bairro)
         cy.get(elementsBugerEats.moto).click()
-        cy.get(elementsBugerEats.fotoCnh).click()
+        /*
+        cy.get('input[accept="image/*"]').selectFile('testeTempo.jpg', {
+            action: 'drag-drop',
+            force:true
+          })
+        */
+
+        cy.fixture('testeTempo.jpg').then((fileContent) => {
+            cy.get('input[accept="image/*"]').then((input) => {
+              const fileName = 'testeTempo.jpg';
+              const fileType = 'image/jpeg';
+          
+              const testFile = new File([fileContent], fileName, { type: fileType });
+              const dataTransfer = new DataTransfer();
+              dataTransfer.items.add(testFile);
+          
+              input[0].files = dataTransfer.files;
+              cy.wrap(input).trigger('change', { force: true });
+            });
+          });
+
+        cy.get(elementsBugerEats.btnCadastre).click()
+        cy.contains('Recebemos os seus dados. Fique de olho na sua caixa de email, pois e em breve retornamos o contato.')
 
 })
 
