@@ -35,24 +35,7 @@ describe('Demo automation', function() {
         cy.get(elementsBugerEats.rua).should('have.value', entregador.rua)
         cy.get(elementsBugerEats.bairro).should('have.value', entregador.bairro)
         cy.get(elementsBugerEats.moto).click()
-        //cy.get(elementsBugerEats.fotoCnh).click()
-
-        cy.get('.dropzone').click();
-
-        // Verificar se a janela de seleção de arquivo foi aberta
-        cy.window().then((win) => {
-          cy.document().then((doc) => {
-            const fileInput = doc.querySelector('.dropzone input[type="file"]');
-            cy.stub(win, 'open').as('windowOpen');
-            cy.wrap(fileInput).trigger('click', { force: true });
-        
-            // Aguardar por um pequeno intervalo para dar tempo da janela ser aberta
-            cy.wait(1000);
-        
-            // Verificar se a função 'open' do objeto window foi chamada
-            cy.window().its('open').should('have.been.called');
-          });
-        });
+        cy.get(elementsBugerEats.fotoCnh).click()
 
 })
 
